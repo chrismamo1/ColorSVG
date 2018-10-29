@@ -54,12 +54,14 @@ angular.module("myApp", ['color.picker']).controller("myCtrl", function ($scope,
 
     $scope.goNext = function (){
       $scope.icon.index = $scope.icon.index + 1;
-      $scope.icon.animation = 'animated slideInRight faster';
+      /*$scope.icon.animation = 'animated fadeInRight';*/
+      $scope.icon.animation = 'fade-in fade-right';
     }
 
     $scope.goPrevious = function (){
       $scope.icon.index = $scope.icon.index - 1;
-      $scope.icon.animation = 'animated slideInLeft faster';
+      /*$scope.icon.animation = 'animated fadeInLeft';*/
+      $scope.icon.animation = 'fade-in fade-left';
     }
 
 });

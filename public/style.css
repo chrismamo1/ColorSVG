@@ -172,6 +172,7 @@ svg {
     font-size: 1.2em;
     background: none;
     cursor: pointer;
+    width: 10em;
 }
 .option:active, .option:focus {
     outline: none;
@@ -193,4 +194,43 @@ svg {
     .options {
         display: none;
     }
+}
+
+@keyframes animation-fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes animation-left {
+  from {
+    transform: translateX(-10vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes animation-right {
+  from {
+    transform: translateX(10vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.fade-right {
+  animation-name:  animation-fade, animation-right;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
+}
+
+.fade-left {
+  animation-name:  animation-fade, animation-left;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
 }
