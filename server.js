@@ -8,6 +8,7 @@ const fs = require('fs-extra');
 const zipFolder = require('zip-folder');
 const uniqid = require('uniqid');
 const exec = require('child-process-promise').exec;
+const formatXml = require('prettify-xml');
 
 
 app.use(express.static(__dirname + '/public'));
@@ -31,7 +32,8 @@ app.get('/api/download/:dir', (req, res) => {
 });
 
 app.post('/api/convert', (req, res) => {
-	console.log("Converting");
+  console.log("Converting");
+  req.body.image = formatXml(req.body.image);
 	console.log(req.body.image);
 
 	const tmp_name = uniqid();
