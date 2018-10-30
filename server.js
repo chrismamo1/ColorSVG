@@ -13,69 +13,69 @@ const exec = require('child-process-promise').exec;
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
-    'extended': 'true'
+	'extended': 'true'
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.json({
-    type: 'application/vnd.api+json'
+	type: 'application/vnd.api+json'
 }));
 app.use(methodOverride());
 
 const port = process.env.PORT || 8080;
 
 app.get('/api/download/:dir', (req, res) => {
-    const tempDir = 'tmp/' + req.params.dir;
-    res.download(tempDir + '/icons.zip');
+	const tempDir = 'tmp/' + req.params.dir;
+	res.download(tempDir + '/icons.zip');
 
-    fs.remove(tempDir, () => {});
+	fs.remove(tempDir, () => {});
 });
 
 app.post('/api/convert', (req, res) => {
-    console.log("Converting");
-    console.log(req.body.image);
+	console.log("Converting");
+	console.log(req.body.image);
 
-    const tmp_name = uniqid();
-    const dir = './tmp/' + tmp_name;
-    const dist = dir + '/dist';
+	const tmp_name = uniqid();
+	const dir = './tmp/' + tmp_name;
+	const dist = dir + '/dist';
 
-        fs.ensureDir(dist, err => {
-            console.log(err);
+	fs.ensureDir(dist, err => {
+		console.log(err);
 
-            fs.writeFile(dist + "/image.svg", req.body.image, err => {
-                if (err) {
-                    return console.log(err);
-                }
+		fs.writeFile(dist + "/image.svg", req.body.image, err => {
+			if (err) {
+				return console.log(err);
+			}
 
-                console.log("The file was saved!");
+			console.log("The file was saved!");
 
-                const options = {
-                    report: true
-                };
+			const options = {
+				report: true
+			};
 
-                const cmd = 'icon-gen -i ' + dist + '/image.svg -o ' + dist + ' -r';
+			const cmd = 'icon-gen -i ' + dist + '/image.svg -o ' + dist + ' -r';
 
-                exec(cmd)
-                    .then(function (result) {
-                        zipFolder(dist, dir + '/icons.zip', err => {
-                            if (err) {
-                                console.log('oh no!', err);
-                                res.send('error');
-                            } else {
-                                console.log('EXCELLENT');
-                                res.send(tmp_name);
-                            }
-                        });
-                    })
-                    .catch(function (err) {
-                        console.error(err);
-                        res.send('error');
-                    });
-            });
-        });
+			exec(cmd)
+				.then(function (result) {
+					zipFolder(dist, dir + '/icons.zip', err => {
+						if (err) {
+							console.log('oh no!', err);
+							res.send('error');
+						} else {
+							console.log('EXCELLENT');
+							res.send(tmp_name);
+						}
+					});
+				})
+				.catch(function (err) {
+					console.error(err);
+					res.send('error');
+				});
+		});
+	});
 });
 
 app.get('*', function (req, res) {
-    res.sendfile('./public/index.html');
+	res.sendfile('./public/index.html');
 });
 
 app.listen(port);
