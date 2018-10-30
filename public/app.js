@@ -32,7 +32,8 @@ angular.module("myApp", ['color.picker']).controller("myCtrl", function ($scope,
     $scope.submit = function () {
         $scope.generating = true;
 
-        var image = document.getElementById("image");
+        var imageId = "icon-" + $scope.icons[$scope.icon.index].id;
+        var image = document.getElementById(imageId);
         image = image.outerHTML.replace('{{ background }}', $scope.background);
         image = image.replace(/{{ accent }}/g, $scope.accent);
 

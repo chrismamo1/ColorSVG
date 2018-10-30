@@ -6,6 +6,8 @@
 
 ColorSVG is a simple web application that allows users to easily modify SVG icon colors.
 
+![image](ColorSVG-Showcase.png)
+
 ## Running
 
 The application is hosted on [Heroku](https://colorsvg.herokuapp.com/). Click on the link to visit the website and start customizing your icons!
