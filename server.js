@@ -36,16 +36,12 @@ app.post('/api/convert', (req, res) => {
 
     const tmp_name = uniqid();
     const dir = './tmp/' + tmp_name;
-    const src = dir + '/src';
     const dist = dir + '/dist';
-
-    fs.ensureDir(src, err => {
-        console.log(err);
 
         fs.ensureDir(dist, err => {
             console.log(err);
 
-            fs.writeFile(src + "/image.svg", req.body.image, err => {
+            fs.writeFile(dist + "/image.svg", req.body.image, err => {
                 if (err) {
                     return console.log(err);
                 }
@@ -56,7 +52,7 @@ app.post('/api/convert', (req, res) => {
                     report: true
                 };
 
-                const cmd = 'icon-gen -i ' + src + '/image.svg -o ' + dist + ' -r';
+                const cmd = 'icon-gen -i ' + dist + '/image.svg -o ' + dist + ' -r';
 
                 exec(cmd)
                     .then(function (result) {
@@ -76,7 +72,6 @@ app.post('/api/convert', (req, res) => {
                     });
             });
         });
-    });
 });
 
 app.get('*', function (req, res) {
